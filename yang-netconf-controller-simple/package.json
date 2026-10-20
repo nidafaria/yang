@@ -1,0 +1,16 @@
+{
+  "name": "yang-netconf-controller-simple",
+  "version": "1.0.0",
+  "description": "Small educational YANG validation and mock NETCONF RPC project",
+  "main": "index.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "yang-js": "0.24.70"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

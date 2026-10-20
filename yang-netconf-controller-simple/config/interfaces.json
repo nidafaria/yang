@@ -1,0 +1,11 @@
+{
+  "interfaces": {
+    "interface": [
+      {
+        "name": "gpon0/1",
+        "enabled": true,
+        "mtu": 1500
+      }
+    ]
+  }
+}
