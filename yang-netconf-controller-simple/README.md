@@ -2,11 +2,12 @@
 
 This small project demonstrates the basic workflow:
 
-1. Read configuration data from JSON.
-2. Load the YANG model and validate the JSON with `yang-js`.
-3. Build a NETCONF-style `<edit-config>` RPC in XML.
-4. Pass it to a local mock server function.
-5. Log the simulated server reply.
+1. Read default configuration values from JSON.
+2. Collect configuration values from the terminal.
+3. Load the YANG model and validate the configuration with `yang-js`.
+4. Build a NETCONF-style `<edit-config>` RPC in XML.
+5. Pass it to a local mock server function.
+6. Log the simulated server reply.
 
 ## Important limitation
 
@@ -24,15 +25,15 @@ npm install
 npm start
 ```
 
-## Try validation
+## Terminal configuration
 
-In `config/interfaces.json`, change an MTU to `100` or change `enabled` to a string such as `"yes"`, then run `npm start` again. The YANG-driven validation should reject values that violate the model. If a particular constraint is not enforced by this library version, treat that as a library limitation rather than production-grade validation.
+Run `npm start` and enter the interface name, enabled state, and MTU when prompted. Press Enter to keep the default from `config/interfaces.json`. Names must be 1 to 32 characters, enabled must be `true` or `false`, and MTU values must be integers from `576` through `9000`; invalid values are rejected before an RPC is sent.
 
 ## Main files
 
 - `yang/interface-config.yang`: schema.
 - `config/interfaces.json`: desired configuration.
-- `src/validator.js`: loads and evaluates the actual YANG file.
+- `src/validator.js`: manually validates the YANG-defined name, enabled, and MTU constraints, then loads and evaluates the actual YANG file.
 - `src/rpc-builder.js`: creates the XML RPC.
 - `src/mock-netconf-server.js`: simulates receiving the RPC.
 - `index.js`: coordinates the workflow and logs each step.

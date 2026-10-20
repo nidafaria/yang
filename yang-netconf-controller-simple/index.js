@@ -1,16 +1,18 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const { validateWithYang } = require("./src/validator");
+const { promptForConfiguration } = require("./src/config-prompt");
 const { buildEditConfigRpc } = require("./src/rpc-builder");
 const { sendToMockNetconfServer } = require("./src/mock-netconf-server");
 
-function main() {
+async function main() {
   console.log("=== YANG + NETCONF mock project ===");
 
   try {
     const configPath = path.join(__dirname, "config", "interfaces.json");
-    const config = JSON.parse(fs.readFileSync(configPath, "utf8"));
-    console.log("[CONFIG] JSON configuration loaded.");
+    const defaultConfig = JSON.parse(fs.readFileSync(configPath, "utf8"));
+    const config = await promptForConfiguration(defaultConfig);
+    console.log("[CONFIG] Terminal configuration loaded.");
 
     validateWithYang(config);
     console.log("[VALIDATION] Configuration accepted by the YANG model.");
